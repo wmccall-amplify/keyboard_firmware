@@ -53,6 +53,7 @@ util/Win_Check_Output.txt
 .vscode/launch.json
 .vscode/tasks.json
 .vscode/last.sql
+.vscode/settings.json
 .vscode/temp.sql
 .stfolder
 .tags
