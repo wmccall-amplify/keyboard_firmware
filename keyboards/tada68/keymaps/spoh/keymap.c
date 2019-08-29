@@ -10,7 +10,7 @@
 #define _MFL 3   // Mac Fn Layer
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  /* Keymap _BL: (Base Layer) Default Layer
+  /* Keymap _BL: Base Layer (Default Layer)
    * ,----------------------------------------------------------------.
    * |Esc | 1|  2|  3|  4|  5|  6|  7|  8|  9|  0|  -|  =|Backsp |Del |
    * |----------------------------------------------------------------|
@@ -30,7 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_LSFT,         KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM,KC_DOT, KC_SLSH,   KC_RSFT,KC_UP,KC_PGDN, \
   KC_LCTL, KC_LGUI,KC_LALT,                KC_SPC,                        KC_RALT,MO(_BFL),KC_RCTRL, KC_LEFT,KC_DOWN,KC_RGHT),
 
-  /* Keymap _FL: Function Layer
+  /* Keymap _BFL: Base Function Layer
    * ,----------------------------------------------------------------.
    * | ~ | F1|F2 |F3 |F4 |F5 |F6 |F7 |F8 |F9 |F10|F11|F12|       |    |
    * |----------------------------------------------------------------|
@@ -49,7 +49,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,        _______,_______, \
   _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,KC_MPLY, KC_VOLU,KC_MUTE, \
   _______,_______,_______,                 _______,               TO(_ML),_______,TO(_BL),KC_MPRV, KC_VOLD, KC_MNXT),
-  /* Keymap _BL: (Base Layer) Default Layer
+
+  /* Keymap _ML: Mac Layer
    * ,----------------------------------------------------------------.
    * |Esc | 1|  2|  3|  4|  5|  6|  7|  8|  9|  0|  -|  =|Backsp |Del |
    * |----------------------------------------------------------------|
@@ -69,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_LSFT,         KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM,KC_DOT, KC_SLSH,   KC_RSFT,KC_UP,KC_PGDN, \
   KC_LCTL, KC_LALT,KC_LGUI,                KC_SPC,                        KC_RALT,MO(_MFL),KC_RCTRL, KC_LEFT,KC_DOWN,KC_RGHT),
 
-  /* Keymap _FL: Function Layer
+  /* Keymap _MFL: Mac Function Layer
    * ,----------------------------------------------------------------.
    * | ~ | F1|F2 |F3 |F4 |F5 |F6 |F7 |F8 |F9 |F10|F11|F12|Cmd+Del|PWR |
    * |----------------------------------------------------------------|
