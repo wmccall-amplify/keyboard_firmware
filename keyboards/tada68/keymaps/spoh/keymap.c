@@ -9,6 +9,12 @@
 #define _ML 2    // Mac Layer
 #define _MFL 3   // Mac Fn Layer
 
+// Macro to perform ctrl + alt + del
+#define KC_CAD LALT(LCTL(KC_DEL))
+
+// Macro to perform ctrl + shift + esc
+#define KC_CSE LSFT(LCTL(KC_ESC))
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Keymap _BL: Base Layer (Default Layer)
    * ,----------------------------------------------------------------.
@@ -40,7 +46,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |----------------------------------------------------------------|
    * |        |   |   |   |   |   |   |   |   |   |   |pl/pse|vup|mute|
    * |----------------------------------------------------------------|
-   * |    |    |    |                       |_ML|   |_BL |prv|vdn| nxt|
+   * |TMgr|    | CAD|                       |_ML|   |_BL |prv|vdn| nxt|
    * `----------------------------------------------------------------'
    */
 [_BFL] = LAYOUT_ansi(
@@ -48,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______, \
   _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,        _______,_______, \
   _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,KC_MPLY, KC_VOLU,KC_MUTE, \
-  _______,_______,_______,                 _______,               TO(_ML),_______,TO(_BL),KC_MPRV, KC_VOLD, KC_MNXT),
+   KC_CSE,_______, KC_CAD,                 _______,               TO(_ML),_______,TO(_BL),KC_MPRV, KC_VOLD, KC_MNXT),
 
   /* Keymap _ML: Mac Layer
    * ,----------------------------------------------------------------.
