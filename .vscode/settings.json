@@ -12,11 +12,8 @@
         "*.c": "c",
         "*.cpp": "cpp",
         "*.hpp": "cpp",
-        "xstddef": "c"
-    },
-    "workbench.colorCustomizations": {
-        "activityBar.background": "#47222D",
-        "titleBar.activeBackground": "#642F40",
-        "titleBar.activeForeground": "#FCF9FA"
+        "xstddef": "c",
+        "type_traits": "c",
+        "utility": "c"
     }
 }
