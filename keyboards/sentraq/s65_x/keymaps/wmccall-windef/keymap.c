@@ -33,8 +33,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * │Ctrl│GUI │Alt │Space                   │Alt│Fn │Ctl│Lft│Dwn│Rgt│
    * └────┴────┴────┴────────────────────────┴───┴───┴───┴───┴───┴───┘
    */
-
-  /* 0: Windows layer */
   [_BL] = LAYOUT_65_ansi(
     KC_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,  \
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC, KC_RBRC, KC_BSLS, KC_INS , \
@@ -50,22 +48,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┼───┤
    * │     │   │   │   │   │   │   │   │   │   │   │rv-│rv+│RGBtg│blt│
    * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┼───┤
-   * │      │   │   │   │   │   │   │   │   │   │rh-│rh+│ RGBmod │bl+│
+   * │ Reset│   │   │   │   │   │   │   │   │   │rh-│rh+│ RGBmod │bl+│
    * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────┬───┼───┤
    * │        │   │   │   │   │   │   │   │   │rs+│rs-│ Play │VUp│bl-│
    * ├────┬───┴┬──┴─┬─┴───┴───┴───┴───┴───┴──┬┴──┬┴──┬┴──┬───┼───┼───┤
-   * │Rset│    │    │                        │_ML│   │_BL│Prv│VDn│Nxt│
+   * │TMgr│    │CAD │                        │_ML│   │_BL│Prv│VDn│Nxt│
    * └────┴────┴────┴────────────────────────┴───┴───┴───┴───┴───┴───┘
    */
-
-   /* 1: Windows Fn layer */
   [_BFL] = LAYOUT_65_ansi(
     KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,   KC_F12,  _______, KC_SLEP, \
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_VAD,  RGB_VAI, RGB_TOG, BL_TOGG, \
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_HUD, RGB_HUI,           RGB_MOD, BL_INC , \
-    KC_CSE ,          _______, _______, _______, _______, _______, _______, _______, _______, RGB_SAD, RGB_SAI,  KC_MPLY, KC_VOLU, BL_DEC , \
-    RESET  , _______, KC_CAD ,                   _______,                            TO(_ML), _______, TO(_BLD), KC_MPRV, KC_VOLD, KC_MNXT  \
+    RESET  , _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_HUD, RGB_HUI,           RGB_MOD, BL_INC , \
+    _______,          _______, _______, _______, _______, _______, _______, _______, _______, RGB_SAD, RGB_SAI,  KC_MPLY, KC_VOLU, BL_DEC , \
+    KC_CSE , _______, KC_CAD ,                   _______,                            TO(_ML), _______, TO(_BLD), KC_MPRV, KC_VOLD, KC_MNXT  \
   ),
+
 
   /* 4: Windows layer - DVORAK
    * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┬───┐
@@ -80,8 +77,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * │Ctrl│GUI │Alt │Space                   │Alt│Fn │Ctl│Lft│Dwn│Rgt│
    * └────┴────┴────┴────────────────────────┴───┴───┴───┴───┴───┴───┘
    */
-
-  /* 4: Windows layer - DVORAK */
   [_BLD] = LAYOUT_65_ansi(
     KC_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,      KC_LBRC, KC_RBRC, KC_BSPC, KC_DEL,  \
     KC_TAB,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,      KC_SLSH, KC_EQL,  KC_BSLS, KC_INS,  \
@@ -97,23 +92,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┼───┤
    * │     │   │   │   │   │   │   │   │   │   │   │rv-│rv+│RGBtg│blt│
    * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┼───┤
-   * │      │   │   │   │   │   │   │   │   │   │rh-│rh+│ RGBmod │bl+│
+   * │ Reset│   │   │   │   │   │   │   │   │   │rh-│rh+│ RGBmod │bl+│
    * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────┬───┼───┤
    * │        │   │   │   │   │   │   │   │   │rs+│rs-│ Play │VUp│bl-│
    * ├────┬───┴┬──┴─┬─┴───┴───┴───┴───┴───┴──┬┴──┬┴──┬┴──┬───┼───┼───┤
-   * │Rset│    │    │                        │_ML│   │_BL│Prv│VDn│Nxt│
+   * │TMgr│    │CAD │                        │_ML│   │_BL│Prv│VDn│Nxt│
    * └────┴────┴────┴────────────────────────┴───┴───┴───┴───┴───┴───┘
    */
-
-   /* 5: Windows Fn layer - DVORAK */
   [_BFLD] = LAYOUT_65_ansi(
     KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, KC_SLEP, \
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_VAD, RGB_VAI, RGB_TOG, BL_TOGG, \
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_HUD, RGB_HUI,          RGB_MOD, BL_INC,  \
-    KC_CSE ,          _______, _______, _______, _______, _______, _______, _______, _______, RGB_SAD, RGB_SAI, KC_MPLY, KC_VOLU, BL_DEC,  \
-    RESET  , _______, KC_CAD ,                   _______,                            TO(_ML), _______, TO(_BL), KC_MPRV, KC_VOLD, KC_MNXT  \
+    RESET  , _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_HUD, RGB_HUI,          RGB_MOD, BL_INC,  \
+    _______,          _______, _______, _______, _______, _______, _______, _______, _______, RGB_SAD, RGB_SAI, KC_MPLY, KC_VOLU, BL_DEC,  \
+    KC_CSE , _______, KC_CAD ,                   _______,                            TO(_ML), _______, TO(_BL), KC_MPRV, KC_VOLD, KC_MNXT  \
   ),
-
 
 
   /* 2: Mac layer
@@ -129,8 +121,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * │Ctrl│Alt │GUI │Space                   │Alt│Fn │Ctl│Lft│Dwn│Rgt│
    * └────┴────┴────┴────────────────────────┴───┴───┴───┴───┴───┴───┘
    */
-
-  /* 2: Mac layer */
   [_ML] = LAYOUT_65_ansi(
     KC_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,     KC_MINS, KC_EQL,  KC_BSPC, KC_DEL,  \
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC, KC_RBRC, KC_BSLS, KC_INS,  \
@@ -146,22 +136,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┼───┤
    * │     │   │   │   │   │   │   │   │   │   │   │rv-│rv+│RGBtg│blt│
    * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┼───┤
-   * │      │   │   │   │   │   │   │   │   │   │rh-│rh+│ RGBmod │bl+│
+   * │ Reset│   │   │   │   │   │   │   │   │   │rh-│rh+│ RGBmod │bl+│
    * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────┬───┼───┤
    * │        │   │   │   │   │   │   │   │   │rs+│rs-│ Play │VUp│bl-│
    * ├────┬───┴┬──┴─┬─┴───┴───┴───┴───┴───┴──┬┴──┬┴──┬┴──┬───┼───┼───┤
-   * │Rset│    │    │                        │_ML│   │_BL│Prv│VDn│Nxt│
+   * │    │    │    │                        │_ML│   │_BL│Prv│VDn│Nxt│
    * └────┴────┴────┴────────────────────────┴───┴───┴───┴───┴───┴───┘
    */
-
-   /* 3: Mac Fn layer */
   [_MFL] = LAYOUT_65_ansi(
     KC_GRV , KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,  KC_F11,  KC_F12,  G(KC_BSPC), KC_MAC_SLEEP, \
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, RGB_VAD, RGB_VAI, RGB_TOG,    BL_TOGG, \
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  RGB_HUD, RGB_HUI,          RGB_MOD,    BL_INC , \
+    RESET  , _______, _______, _______, _______, _______, _______, _______, _______, _______,  RGB_HUD, RGB_HUI,          RGB_MOD,    BL_INC , \
     _______,          _______, _______, _______, _______, _______, _______, _______, _______,  RGB_SAD, RGB_SAI, KC_MPLY, KC_VOLU,    BL_DEC , \
-    RESET  , _______, _______,                   _______,                            TO(_MLD), _______, TO(_BL), KC_MPRV, KC_VOLD,    KC_MNXT  \
+    _______, _______, _______,                   _______,                            TO(_MLD), _______, TO(_BL), KC_MPRV, KC_VOLD,    KC_MNXT  \
   ),
+
 
   /* 6: Mac layer - DVORAK
    * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┬───┐
@@ -176,8 +165,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * │Ctrl│Alt │GUI │Space                   │Alt│Fn │Ctl│Lft│Dwn│Rgt│
    * └────┴────┴────┴────────────────────────┴───┴───┴───┴───┴───┴───┘
    */
-
-  /* 6: Mac layer - DVORAK */
   [_MLD] = LAYOUT_65_ansi(
     KC_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,      KC_LBRC, KC_RBRC, KC_BSPC, KC_DEL,  \
     KC_TAB,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,      KC_SLSH, KC_EQL,  KC_BSLS, KC_INS , \
@@ -193,20 +180,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┼───┤
    * │     │   │   │   │   │   │   │   │   │   │   │rv-│rv+│RGBtg│blt│
    * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┼───┤
-   * │      │   │   │   │   │   │   │   │   │   │rh-│rh+│ RGBmod │bl+│
+   * │ Reset│   │   │   │   │   │   │   │   │   │rh-│rh+│ RGBmod │bl+│
    * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────┬───┼───┤
    * │        │   │   │   │   │   │   │   │   │rs+│rs-│ Play │VUp│bl-│
    * ├────┬───┴┬──┴─┬─┴───┴───┴───┴───┴───┴──┬┴──┬┴──┬┴──┬───┼───┼───┤
-   * │Rset│    │    │                        │_ML│   │_BL│Prv│VDn│Nxt│
+   * │    │    │    │                        │_ML│   │_BL│Prv│VDn│Nxt│
    * └────┴────┴────┴────────────────────────┴───┴───┴───┴───┴───┴───┘
    */
-
-   /* 7: Mac fn layer - DVORAK */
   [_MFLD] = LAYOUT_65_ansi(
     KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, KC_MAC_SLEEP, \
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_VAD, RGB_VAI, RGB_TOG, BL_TOGG, \
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_HUD, RGB_HUI,          RGB_MOD, BL_INC , \
+    RESET  , _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_HUD, RGB_HUI,          RGB_MOD, BL_INC , \
     _______,          _______, _______, _______, _______, _______, _______, _______, _______, RGB_SAD, RGB_SAI, KC_MPLY, KC_VOLU, BL_DEC , \
-    RESET  , _______, _______,                   _______,                            TO(_ML), _______, TO(_BL), KC_MPRV, KC_VOLD, KC_MNXT  \
+    _______, _______, _______,                   _______,                            TO(_ML), _______, TO(_BL), KC_MPRV, KC_VOLD, KC_MNXT  \
   ),
 };
