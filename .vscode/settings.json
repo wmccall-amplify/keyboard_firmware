@@ -21,10 +21,5 @@
     "[markdown]": {
         "editor.trimAutoWhitespace": false,
         "files.trimTrailingWhitespace": false
-    },
-    "workbench.colorCustomizations": {
-        "activityBar.background": "#47222D",
-        "titleBar.activeBackground": "#642F40",
-        "titleBar.activeForeground": "#FCF9FA"
     }
 }

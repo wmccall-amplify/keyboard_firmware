@@ -23,8 +23,8 @@ This is a layout for the grid planck, built with a few ideals in mind:
 
 - Symbols should be arranged so that the most frequently used are easiest to
   reach. This includes numbers, and lower numbers are more commonly used than
-  higher ones. (number arrangement borrowed from [dustypomeleau's minidox
-  layout][].
+  higher ones. (number arrangement borrowed from [dustypomeleau’s minidox
+  layout][]).
 
-[dustypomeleau's minidox layout]: https://github.com/qmk/qmk_firmware/tree/master/keyboards/minidox/keymaps/dustypomerleau
+[dustypomeleau’s minidox layout]: https://github.com/qmk/qmk_firmware/tree/master/keyboards/minidox/keymaps/dustypomerleau
 [keymap.c]: keymap.c
