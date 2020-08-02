@@ -29,12 +29,17 @@
 // Macro to sleep mac (ctrl + shift + power)
 #define KC_MAC_SLEEP LSFT(LCTL(KC_PWR))
 
+bool is_spasm = false;
+
 bool caps_is_active = false;
 
 #define DEFAULT_RGB_MODE 13
 
 #define DEFAULT_CAPS_MODE 5
 #define DEFAULT_CAPS_HSV 19, 255, 255
+
+#define DEFAULT_SPASM_M0DE 1
+#define DEFAULT_CALM_MODE 13
 
 // rgblight_setrgb_range(r, g, b, start, end)
 uint32_t desired_mode = 13;
@@ -46,7 +51,9 @@ uint32_t desired_value = 100;
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
   QMKBEST = SAFE_RANGE,
-  QMKURL
+  QMKURL,
+  SPASM,
+  CALM,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -74,9 +81,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ,----------------------------------------------------------------.
    * | ~ | F1|F2 |F3 |F4 |F5 |F6 |F7 |F8 |F9 |F10|F11|F12|       |slp |
    * |----------------------------------------------------------------|
-   * |     |   |   |   |   |   |   |   |   |   |   |rv-|rv+|RGBtg|    |
+   * |     |   |   |   |   |   |   |   |   |   |   |rv-|rv+|RGBtg|SPSM|
    * |----------------------------------------------------------------|
-   * |RESET |   |   |   |   |   |   |   |   |   |rh-|rh+| RGBmod |    |
+   * |RESET |   |   |   |   |   |   |   |   |   |rh-|rh+| RGBmod |CALM|
    * |----------------------------------------------------------------|
    * |        |   |   |   |   |   |   |   |   │rs-│rs+│pl/pse|vup|mute|
    * |----------------------------------------------------------------|
@@ -85,8 +92,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
 [_BFL] = LAYOUT_65_ansi(
    KC_GRV,  KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,  KC_F7,  KC_F8,  KC_F9, KC_F10, KC_F11, KC_F12,_______,KC_SLEP, \
-  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_VAD, RGB_VAI, RGB_TOG,_______, \
-  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_HUD,RGB_HUI,          RGB_MOD,_______, \
+  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_VAD, RGB_VAI, RGB_TOG,SPASM, \
+  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_HUD,RGB_HUI,          RGB_MOD,CALM, \
   _______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_SAD,RGB_SAI,KC_MPLY, KC_VOLU,KC_MUTE, \
    KC_CSE,_______, KC_CAD,                 _______,               TO(_ML),_______,TO(_BL),KC_MPRV, KC_VOLD, KC_MNXT),
 
@@ -139,8 +146,12 @@ void save_cur_hsv(void){
 
 void update_lights(void){
   if(caps_is_active){
-    if(rgblight_get_mode() == 1){
-      desired_mode = 13;
+    if(rgblight_get_mode() == DEFAULT_CAPS_MODE){
+      if(is_spasm){
+        desired_mode = DEFAULT_SPASM_M0DE;
+      }else{
+        desired_mode = DEFAULT_CALM_MODE;
+      }
     }else{
       desired_mode = rgblight_get_mode();
     }
@@ -171,12 +182,23 @@ bool set_caps(void){
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-    case KC_CAPS:
+      case SPASM:
         if (record->event.pressed) {
-            // caps_is_active = !caps_is_active;
-            // update_lights();
+            is_spasm = true;
         }
         break;
+      case CALM:
+        if (record->event.pressed) {
+            is_spasm = false;
+        }
+        break;
+      default:
+        if (!(record->event.pressed)){
+          if(!caps_is_active && is_spasm){
+            rgblight_mode(DEFAULT_SPASM_M0DE);
+            rgblight_sethsv( rand() % 360, 255, 255);
+          }
+        }
     }
     return true;
 };
