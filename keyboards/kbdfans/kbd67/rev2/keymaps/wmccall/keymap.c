@@ -34,7 +34,10 @@ bool caps_is_active = false;
 #define DEFAULT_RGB_MODE 13
 
 #define DEFAULT_CAPS_MODE 5
-#define DEFAULT_CAPS_HSV 19, 255, 255
+#define DEFAULT_CAPS_HUE 19
+#define DEFAULT_CAPS_SAT 255
+#define DEFAULT_CAPS_VAL 255
+#define DEFAULT_CAPS_HSV DEFAULT_CAPS_HUE, DEFAULT_CAPS_SAT, DEFAULT_CAPS_VAL
 
 // rgblight_setrgb_range(r, g, b, start, end)
 uint32_t desired_mode = 13;
@@ -139,11 +142,7 @@ void save_cur_hsv(void){
 
 void update_lights(void){
   if(caps_is_active){
-    if(rgblight_get_mode() == 1){
-      desired_mode = 13;
-    }else{
-      desired_mode = rgblight_get_mode();
-    }
+    desired_mode = rgblight_get_mode();
     save_cur_hsv();
     rgblight_mode(DEFAULT_CAPS_MODE);
     rgblight_sethsv(DEFAULT_CAPS_HSV);
