@@ -29,6 +29,9 @@
 // Macro to sleep mac (ctrl + shift + power)
 #define KC_MAC_SLEEP LSFT(LCTL(KC_PWR))
 
+bool caps_is_active = false;
+uint32_t desired = 13;
+
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
   QMKBEST = SAFE_RANGE,
@@ -117,34 +120,57 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,_______,_______,                 _______,               TO(_ML),_______,TO(_BL),KC_MPRV, KC_VOLD, KC_MNXT),
 };
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case QMKBEST:
-      if (record->event.pressed) {
-        // when keycode QMKBEST is pressed
-        SEND_STRING("QMK is the best thing ever!");
-      } else {
-        // when keycode QMKBEST is released
-      }
-      break;
-    case QMKURL:
-      if (record->event.pressed) {
-        // when keycode QMKURL is pressed
-        SEND_STRING("https://qmk.fm/" SS_TAP(X_ENTER));
-      } else {
-        // when keycode QMKURL is released
-      }
-      break;
+void update_lights(void){
+  if(caps_is_active){
+    if(rgblight_get_mode() == 1){
+      desired = 13;
+    }else{
+      desired = rgblight_get_mode();
+    }
+    rgblight_mode(1);
+  }else{
+    rgblight_mode(desired);
   }
-  return true;
 }
 
-void matrix_init_user(void) {
+bool set_caps(void){
+  bool is_different = false;
+  if (host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK)) {
+    if(!caps_is_active){
+      is_different = true;
+    }
+    caps_is_active = true;
+  } else {
+    if(caps_is_active){
+      is_different = true;
+    }
+    caps_is_active = false;
+  }
+  return is_different;
+}
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case KC_CAPS:
+        if (record->event.pressed) {
+            // caps_is_active = !caps_is_active;
+            // update_lights();
+        }
+        break;
+    }
+    return true;
+};
+
+void matrix_init_user(void) {
+  // rgblight_mode(desired);
+  set_caps();
+  update_lights();
 }
 
 void matrix_scan_user(void) {
-
+  if(set_caps()){
+    update_lights();
+  }
 }
 
 void led_set_user(uint8_t usb_led) {
