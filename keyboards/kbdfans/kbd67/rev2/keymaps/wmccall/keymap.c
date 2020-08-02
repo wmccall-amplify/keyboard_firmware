@@ -30,7 +30,18 @@
 #define KC_MAC_SLEEP LSFT(LCTL(KC_PWR))
 
 bool caps_is_active = false;
-uint32_t desired = 13;
+
+#define DEFAULT_RGB_MODE 13
+
+#define DEFAULT_CAPS_MODE 5
+#define DEFAULT_CAPS_HSV 19, 255, 255
+
+// rgblight_setrgb_range(r, g, b, start, end)
+uint32_t desired_mode = 13;
+
+uint32_t desired_hue = 160;
+uint32_t desired_saturation = 100;
+uint32_t desired_value = 100;
 
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
@@ -65,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |----------------------------------------------------------------|
    * |     |   |   |   |   |   |   |   |   |   |   |rv-|rv+|RGBtg|    |
    * |----------------------------------------------------------------|
-   * |      |   |   |   |   |   |   |   |   |   |rh-|rh+| RGBmod |    |
+   * |RESET |   |   |   |   |   |   |   |   |   |rh-|rh+| RGBmod |    |
    * |----------------------------------------------------------------|
    * |        |   |   |   |   |   |   |   |   │rs-│rs+│pl/pse|vup|mute|
    * |----------------------------------------------------------------|
@@ -75,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_BFL] = LAYOUT_65_ansi(
    KC_GRV,  KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,  KC_F7,  KC_F8,  KC_F9, KC_F10, KC_F11, KC_F12,_______,KC_SLEP, \
   _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_VAD, RGB_VAI, RGB_TOG,_______, \
-  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_HUD,RGB_HUI,          RGB_MOD,_______, \
+  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_HUD,RGB_HUI,          RGB_MOD,_______, \
   _______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_SAD,RGB_SAI,KC_MPLY, KC_VOLU,KC_MUTE, \
    KC_CSE,_______, KC_CAD,                 _______,               TO(_ML),_______,TO(_BL),KC_MPRV, KC_VOLD, KC_MNXT),
 
@@ -105,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |----------------------------------------------------------------|
    * |     |   |   |   |   |   |   |   |   |   |   |rv-|rv+|RGBtg|    |
    * |----------------------------------------------------------------|
-   * |      |   |   |   |   |   |   |   |   |   |rh-|rh+| RGBmod |    |
+   * |RESET |   |   |   |   |   |   |   |   |   |rh-|rh+| RGBmod |    |
    * |----------------------------------------------------------------|
    * |        |   |   |   |   |   |   |   |   │rs-│rs+│pl/pse|vup|mute|
    * |----------------------------------------------------------------|
@@ -115,21 +126,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_MFL] = LAYOUT_65_ansi(
    KC_GRV,  KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,  KC_F7,  KC_F8,  KC_F9, KC_F10, KC_F11, KC_F12,G(KC_BSPC),KC_PWR , \
   _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_VAD, RGB_VAI, RGB_TOG,_______, \
-  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_HUD,RGB_HUI,          RGB_MOD,_______, \
+  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_HUD,RGB_HUI,          RGB_MOD,_______, \
   _______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_SAD,RGB_SAI,KC_MPLY, KC_VOLU,KC_MUTE, \
   _______,_______,_______,                 _______,               TO(_ML),_______,TO(_BL),KC_MPRV, KC_VOLD, KC_MNXT),
 };
 
+void save_cur_hsv(void){
+  desired_hue = rgblight_get_hue();
+  desired_saturation = rgblight_get_sat();
+  desired_value = rgblight_get_val();
+}
+
 void update_lights(void){
   if(caps_is_active){
     if(rgblight_get_mode() == 1){
-      desired = 13;
+      desired_mode = 13;
     }else{
-      desired = rgblight_get_mode();
+      desired_mode = rgblight_get_mode();
     }
-    rgblight_mode(1);
+    save_cur_hsv();
+    rgblight_mode(DEFAULT_CAPS_MODE);
+    rgblight_sethsv(DEFAULT_CAPS_HSV);
   }else{
-    rgblight_mode(desired);
+    rgblight_mode(desired_mode);
+    rgblight_sethsv(desired_hue, desired_saturation, desired_value);
   }
 }
 
@@ -162,7 +182,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 };
 
 void matrix_init_user(void) {
-  // rgblight_mode(desired);
   set_caps();
   update_lights();
 }
