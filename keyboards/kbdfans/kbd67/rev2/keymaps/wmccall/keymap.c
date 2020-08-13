@@ -34,7 +34,7 @@ bool caps_is_active = false;
 #define DEFAULT_RGB_MODE 13
 
 #define DEFAULT_CAPS_MODE 5
-#define DEFAULT_CAPS_HUE 19
+#define DEFAULT_CAPS_HUE 12
 #define DEFAULT_CAPS_SAT 255
 #define DEFAULT_CAPS_VAL 255
 #define DEFAULT_CAPS_HSV DEFAULT_CAPS_HUE, DEFAULT_CAPS_SAT, DEFAULT_CAPS_VAL
@@ -79,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |----------------------------------------------------------------|
    * |     |   |   |   |   |   |   |   |   |   |   |rv-|rv+|RGBtg|    |
    * |----------------------------------------------------------------|
-   * |RESET |   |   |   |   |   |   |   |   |   |rh-|rh+| RGBmod |    |
+   * |RESET |   |   |   |   |   |   |   |   |   |rh-|rh+| RGBmod |rmod|
    * |----------------------------------------------------------------|
    * |        |   |   |   |   |   |   |   |   │rs-│rs+│pl/pse|vup|mute|
    * |----------------------------------------------------------------|
@@ -89,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_BFL] = LAYOUT_65_ansi(
    KC_GRV,  KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,  KC_F7,  KC_F8,  KC_F9, KC_F10, KC_F11, KC_F12,_______,KC_SLEP, \
   _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_VAD, RGB_VAI, RGB_TOG,_______, \
-  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_HUD,RGB_HUI,          RGB_MOD,_______, \
+  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_HUD,RGB_HUI,          RGB_MOD,RGB_RMOD, \
   _______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_SAD,RGB_SAI,KC_MPLY, KC_VOLU,KC_MUTE, \
    KC_CSE,_______, KC_CAD,                 _______,               TO(_ML),_______,TO(_BL),KC_MPRV, KC_VOLD, KC_MNXT),
 
@@ -119,7 +119,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |----------------------------------------------------------------|
    * |     |   |   |   |   |   |   |   |   |   |   |rv-|rv+|RGBtg|    |
    * |----------------------------------------------------------------|
-   * |RESET |   |   |   |   |   |   |   |   |   |rh-|rh+| RGBmod |    |
+   * |RESET |   |   |   |   |   |   |   |   |   |rh-|rh+| RGBmod |rmod|
    * |----------------------------------------------------------------|
    * |        |   |   |   |   |   |   |   |   │rs-│rs+│pl/pse|vup|mute|
    * |----------------------------------------------------------------|
@@ -129,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_MFL] = LAYOUT_65_ansi(
    KC_GRV,  KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,  KC_F7,  KC_F8,  KC_F9, KC_F10, KC_F11, KC_F12,G(KC_BSPC),KC_PWR , \
   _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_VAD, RGB_VAI, RGB_TOG,_______, \
-  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_HUD,RGB_HUI,          RGB_MOD,_______, \
+  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_HUD,RGB_HUI,          RGB_MOD,RGB_RMOD, \
   _______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_SAD,RGB_SAI,KC_MPLY, KC_VOLU,KC_MUTE, \
   _______,_______,_______,                 _______,               TO(_ML),_______,TO(_BL),KC_MPRV, KC_VOLD, KC_MNXT),
 };
