@@ -16,7 +16,7 @@
 
 #pragma once
 
-#undef RGBLIGHT_RAINBOW_SWIRL_RANGE
-#define RGBLIGHT_RAINBOW_SWIRL_RANGE 320
+// #undef RGBLIGHT_RAINBOW_SWIRL_RANGE
+// #define RGBLIGHT_RAINBOW_SWIRL_RANGE 320
 
 // place overrides here

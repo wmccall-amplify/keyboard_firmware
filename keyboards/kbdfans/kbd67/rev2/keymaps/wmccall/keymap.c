@@ -46,10 +46,25 @@ uint32_t desired_hue = 160;
 uint32_t desired_saturation = 100;
 uint32_t desired_value = 100;
 
+bool hue_up = false;
+bool hue_down = false;
+bool val_up = false;
+bool val_down = false;
+bool sat_up = false;
+bool sat_down = false;
+
+uint32_t clock_step = 0;
+
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
   QMKBEST = SAFE_RANGE,
-  QMKURL
+  QMKURL,
+  C_VAI,
+  C_VAD,
+  C_HUI,
+  C_HUD,
+  C_SAI,
+  C_SAD
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -88,9 +103,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
 [_BFL] = LAYOUT_65_ansi(
    KC_GRV,  KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,  KC_F7,  KC_F8,  KC_F9, KC_F10, KC_F11, KC_F12,_______,KC_SLEP, \
-  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_VAD, RGB_VAI, RGB_TOG,_______, \
-  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_HUD,RGB_HUI,          RGB_MOD,RGB_RMOD, \
-  _______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_SAD,RGB_SAI,KC_MPLY, KC_VOLU,KC_MUTE, \
+  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,C_VAD, C_VAI, RGB_TOG,_______, \
+  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,C_HUD,C_HUI,          RGB_MOD,RGB_RMOD, \
+  _______,_______,_______,_______,_______,_______,_______,_______,_______,C_SAD,C_SAI,KC_MPLY, KC_VOLU,KC_MUTE, \
    KC_CSE,_______, KC_CAD,                 _______,               TO(_ML),_______,TO(_BL),KC_MPRV, KC_VOLD, KC_MNXT),
 
 /* Keymap _ML: Mac Layer
@@ -128,9 +143,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
 [_MFL] = LAYOUT_65_ansi(
    KC_GRV,  KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,  KC_F7,  KC_F8,  KC_F9, KC_F10, KC_F11, KC_F12,G(KC_BSPC),KC_PWR , \
-  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_VAD, RGB_VAI, RGB_TOG,_______, \
-  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_HUD,RGB_HUI,          RGB_MOD,RGB_RMOD, \
-  _______,_______,_______,_______,_______,_______,_______,_______,_______,RGB_SAD,RGB_SAI,KC_MPLY, KC_VOLU,KC_MUTE, \
+  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,C_VAD, C_VAI, RGB_TOG,_______, \
+  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,C_HUD,C_HUI,          RGB_MOD,RGB_RMOD, \
+  _______,_______,_______,_______,_______,_______,_______,_______,_______,C_SAD,C_SAI,KC_MPLY, KC_VOLU,KC_MUTE, \
   _______,_______,_______,                 _______,               TO(_ML),_______,TO(_BL),KC_MPRV, KC_VOLD, KC_MNXT),
 };
 
@@ -170,15 +185,27 @@ bool set_caps(void){
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-    case KC_CAPS:
-        if (record->event.pressed) {
-            // caps_is_active = !caps_is_active;
-            // update_lights();
-        }
-        break;
-    }
+      case C_HUI:
+          hue_up = record->event.pressed;
+          break;
+      case C_HUD:
+          hue_down = record->event.pressed;
+          break;
+      case C_VAI:
+          val_up = record->event.pressed;
+          break;
+      case C_VAD:
+          val_down = record->event.pressed;
+          break;
+      case C_SAI:
+          sat_up = record->event.pressed;
+          break;
+      case C_SAD:
+          sat_down = record->event.pressed;
+          break;
+      }
     return true;
-};
+}
 
 void matrix_init_user(void) {
   set_caps();
@@ -186,8 +213,38 @@ void matrix_init_user(void) {
 }
 
 void matrix_scan_user(void) {
+  clock_step = (clock_step + 1)%50;
   if(set_caps()){
     update_lights();
+  }
+  short new_hue = rgblight_get_hue();
+  short new_val = rgblight_get_val();
+  short new_sat = rgblight_get_sat();
+  short delta = 3;
+  if(clock_step == 0){
+    if(hue_up){
+      new_hue += 1;
+    }
+    if(hue_down){
+      new_hue -= 1;
+    }
+    if(val_up){
+      new_val += delta;
+      if (new_val >= RGBLIGHT_LIMIT_VAL) new_val = RGBLIGHT_LIMIT_VAL;
+    }
+    if(val_down){
+      new_val -= delta;
+      if (new_val <= 0) new_val = 0;
+    }
+    if(sat_up){
+      new_sat += delta;
+      if (new_sat >= 255) new_sat = 255;
+    }
+    if(sat_down){
+      new_sat -= delta;
+      if (new_sat <= 0) new_sat = 0;
+    }
+    rgblight_sethsv(new_hue, new_sat, new_val);
   }
 }
 
