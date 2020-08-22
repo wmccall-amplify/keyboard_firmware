@@ -46,6 +46,8 @@ uint32_t desired_hue = 160;
 uint32_t desired_saturation = 100;
 uint32_t desired_value = 100;
 
+uint32_t rgb_tog_value = 100;
+
 bool hue_up = false;
 bool hue_down = false;
 bool val_up = false;
@@ -59,12 +61,13 @@ uint32_t clock_step = 0;
 enum custom_keycodes {
   QMKBEST = SAFE_RANGE,
   QMKURL,
-  C_VAI,
-  C_VAD,
-  C_HUI,
-  C_HUD,
-  C_SAI,
-  C_SAD
+  CUS_VAI,
+  CUS_VAD,
+  CUS_HUI,
+  CUS_HUD,
+  CUS_SAI,
+  CUS_SAD,
+  CUS_TOG
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -103,9 +106,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
 [_BFL] = LAYOUT_65_ansi(
    KC_GRV,  KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,  KC_F7,  KC_F8,  KC_F9, KC_F10, KC_F11, KC_F12,_______,KC_SLEP, \
-  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,C_VAD, C_VAI, RGB_TOG,_______, \
-  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,C_HUD,C_HUI,          RGB_MOD,RGB_RMOD, \
-  _______,_______,_______,_______,_______,_______,_______,_______,_______,C_SAD,C_SAI,KC_MPLY, KC_VOLU,KC_MUTE, \
+  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,CUS_VAD, CUS_VAI, CUS_TOG,_______, \
+  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,CUS_HUD,CUS_HUI,          RGB_MOD,RGB_RMOD, \
+  _______,_______,_______,_______,_______,_______,_______,_______,_______,CUS_SAD,CUS_SAI,KC_MPLY, KC_VOLU,KC_MUTE, \
    KC_CSE,_______, KC_CAD,                 _______,               TO(_ML),_______,TO(_BL),KC_MPRV, KC_VOLD, KC_MNXT),
 
 /* Keymap _ML: Mac Layer
@@ -143,9 +146,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
 [_MFL] = LAYOUT_65_ansi(
    KC_GRV,  KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_F6,  KC_F7,  KC_F8,  KC_F9, KC_F10, KC_F11, KC_F12,G(KC_BSPC),KC_PWR , \
-  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,C_VAD, C_VAI, RGB_TOG,_______, \
-  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,C_HUD,C_HUI,          RGB_MOD,RGB_RMOD, \
-  _______,_______,_______,_______,_______,_______,_______,_______,_______,C_SAD,C_SAI,KC_MPLY, KC_VOLU,KC_MUTE, \
+  _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,CUS_VAD, CUS_VAI, CUS_TOG,_______, \
+  RESET  ,_______,_______,_______,_______,_______,_______,_______,_______,_______,CUS_HUD,CUS_HUI,          RGB_MOD,RGB_RMOD, \
+  _______,_______,_______,_______,_______,_______,_______,_______,_______,CUS_SAD,CUS_SAI,KC_MPLY, KC_VOLU,KC_MUTE, \
   _______,_______,_______,                 _______,               TO(_ML),_______,TO(_BL),KC_MPRV, KC_VOLD, KC_MNXT),
 };
 
@@ -185,24 +188,35 @@ bool set_caps(void){
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-      case C_HUI:
+      case CUS_HUI:
           hue_up = record->event.pressed;
           break;
-      case C_HUD:
+      case CUS_HUD:
           hue_down = record->event.pressed;
           break;
-      case C_VAI:
+      case CUS_VAI:
           val_up = record->event.pressed;
           break;
-      case C_VAD:
+      case CUS_VAD:
           val_down = record->event.pressed;
           break;
-      case C_SAI:
+      case CUS_SAI:
           sat_up = record->event.pressed;
           break;
-      case C_SAD:
+      case CUS_SAD:
           sat_down = record->event.pressed;
           break;
+      case CUS_TOG:
+          if(record->event.pressed){
+            short cur_val = rgblight_get_val();
+            if(cur_val == 0){
+              rgblight_sethsv(rgblight_get_hue(), rgblight_get_sat(), rgb_tog_value);
+            }else{
+              rgb_tog_value = cur_val;
+              rgblight_sethsv(rgblight_get_hue(), rgblight_get_sat(), 0);
+            }
+            
+          }
       }
     return true;
 }
