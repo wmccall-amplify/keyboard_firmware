@@ -67,7 +67,9 @@ enum custom_keycodes {
   CUS_HUD,
   CUS_SAI,
   CUS_SAD,
-  CUS_TOG
+  CUS_TOG,
+  CUS_MOD,
+  CUS_RMOD
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -187,37 +189,37 @@ bool set_caps(void){
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    // short new_mod = 0;
     switch (keycode) {
       case CUS_HUI:
-          hue_up = record->event.pressed;
-          break;
+        hue_up = record->event.pressed;
+        break;
       case CUS_HUD:
-          hue_down = record->event.pressed;
-          break;
+        hue_down = record->event.pressed;
+        break;
       case CUS_VAI:
-          val_up = record->event.pressed;
-          break;
+        val_up = record->event.pressed;
+        break;
       case CUS_VAD:
-          val_down = record->event.pressed;
-          break;
+        val_down = record->event.pressed;
+        break;
       case CUS_SAI:
-          sat_up = record->event.pressed;
-          break;
+        sat_up = record->event.pressed;
+        break;
       case CUS_SAD:
-          sat_down = record->event.pressed;
-          break;
+        sat_down = record->event.pressed;
+        break;
       case CUS_TOG:
-          if(record->event.pressed){
-            short cur_val = rgblight_get_val();
-            if(cur_val == 0){
-              rgblight_sethsv(rgblight_get_hue(), rgblight_get_sat(), rgb_tog_value);
-            }else{
-              rgb_tog_value = cur_val;
-              rgblight_sethsv(rgblight_get_hue(), rgblight_get_sat(), 0);
-            }
-            
+        if(record->event.pressed){
+          short cur_val = rgblight_get_val();
+          if(cur_val == 0){
+            rgblight_sethsv(rgblight_get_hue(), rgblight_get_sat(), rgb_tog_value);
+          }else{
+            rgb_tog_value = cur_val;
+            rgblight_sethsv(rgblight_get_hue(), rgblight_get_sat(), 0);
           }
-      }
+        }
+    }
     return true;
 }
 
